@@ -1,0 +1,147 @@
+body{
+  font-family: "Arial"
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+ul {
+    list-style: none;
+    display: flex;
+  }
+
+h1{
+  width: 100%;
+  padding: 3% 0;
+}
+.App__content{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.5vw;
+}
+
+.RealTime{
+  width: 28%;
+  @extend %Globalborder;
+
+  &__header{
+    @extend %header; 
+  }
+
+  &__result{
+    background-color: #2b3035;
+    width: 96%;
+    border: 2px solid black;
+    margin: 2% auto;
+    padding: 1%;
+  }
+
+  &__row{
+    font-weight: bold;
+    padding: 2% 0;
+    color: white;
+
+    span:first-child{
+      margin-right: 2%;
+    }
+  }
+
+  &__Name{
+    color: #ffca17;
+    font-size: 0.7vw;
+  }
+
+  &__porcent{
+    color:#e66d19;
+    font-size: 0.8vw;
+  }
+
+  &__price{
+    font-size: 0.8vw;
+    color: white;
+    font-weight: bold;
+  }
+
+  &__cost--big{
+    font-size: 2vw;
+  }
+}
+
+
+.Historical{
+  width: 68%;
+  @extend %Globalborder;
+
+  &__header{
+    @extend %header;
+  }
+  
+  &__nav{
+    margin: 1% auto;
+    padding: 1%;
+    width: 98%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #dddddd;
+    border-top: none;
+  }
+
+  &__subTitle{
+    background-color: #2b3035;
+    border-radius: 3px;
+    color: white;
+    padding: 0.8% 1.5%;
+  }
+
+  &__date{
+    display: none;
+    color: #8a8a8a;
+    font-size: 1vw;
+  }
+
+  &__download{
+    margin: 5% auto;
+    width: 98%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__btn{
+    background-color: #2b3035;
+    border: none;
+    color: white;
+    padding: 1.2%;
+    border-radius: 5px;
+  }
+
+  &__graphic{
+    width: 98%;
+    margin: 0 auto;
+  }
+
+}
+
+
+//- placeholder
+//-- header
+%header{
+  background-color: #333;
+  color: white;
+  font-size: 0.5vw;
+  padding: 0.4vw 0.3vw 0.2vw;
+}
+
+%Globalborder{
+  border: 1px solid #333;
+  border-radius: 5px;
+  overflow: hidden;
+}
