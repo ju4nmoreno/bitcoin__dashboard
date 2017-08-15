@@ -29502,7 +29502,6 @@ var Services = exports.Services = function Services(returnService, path) {
     }
 
     if (ajax.status === 200) {
-      var text = JSON.parse("[" + ajax.responseText + "]");
       returnService(ajax.responseText);
     } else {
       console.warn('error');
@@ -42660,6 +42659,7 @@ __webpack_require__(434);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 Date.prototype.yyyymmdd = function () {
+
   var mm = this.getMonth() + 1; // getMonth() is zero-based
   var dd = this.getDate();
 
@@ -42672,7 +42672,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(
     'h1',
     null,
-    'Bitcoin Dashboar'
+    'Bitcoin Dashboard'
   ),
   _react2.default.createElement(_RealTime.RealTime, { className: 'RealTime' }),
   _react2.default.createElement(_Historical.Historical, null)
@@ -54993,8 +54993,6 @@ var Historical = exports.Historical = function (_Component) {
       end: _this.addDays(-7)
     };
 
-    _this.fill.bind(_this);
-
     //console.log("end", this.state.end)
 
     _this.fill();
@@ -55031,6 +55029,8 @@ var Historical = exports.Historical = function (_Component) {
 
       var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+
+      console.log(this.state);
 
       if (obj !== null) this.setState(obj);
 
@@ -55148,7 +55148,7 @@ var Historical = exports.Historical = function (_Component) {
                 null,
                 _react2.default.createElement(
                   'button',
-                  { onClick: function onClick() {
+                  { className: 'Btn__historical Btn__historical--active', onClick: function onClick() {
                       return _this3.fill({ end: _this3.addDays(-7) });
                     } },
                   '1w'
@@ -55159,7 +55159,7 @@ var Historical = exports.Historical = function (_Component) {
                 null,
                 _react2.default.createElement(
                   'button',
-                  { onClick: function onClick() {
+                  { className: 'Btn__historical', onClick: function onClick() {
                       return _this3.fill({ end: _this3.addDays(-30) });
                     } },
                   '1m'
@@ -55170,7 +55170,7 @@ var Historical = exports.Historical = function (_Component) {
                 null,
                 _react2.default.createElement(
                   'button',
-                  { onClick: function onClick() {
+                  { className: 'Btn__historical', onClick: function onClick() {
                       return _this3.fill({ end: _this3.addDays(-90) });
                     } },
                   '3m'
@@ -55181,7 +55181,7 @@ var Historical = exports.Historical = function (_Component) {
                 null,
                 _react2.default.createElement(
                   'button',
-                  { onClick: function onClick() {
+                  { className: 'Btn__historical', onClick: function onClick() {
                       return _this3.fill({ end: _this3.addDays(-357) });
                     } },
                   '1y'
@@ -55192,7 +55192,7 @@ var Historical = exports.Historical = function (_Component) {
                 null,
                 _react2.default.createElement(
                   'button',
-                  { onClick: function onClick() {
+                  { className: 'Btn__historical', onClick: function onClick() {
                       return _this3.fill({ end: _this3.addDays(-2555) });
                     } },
                   'all'
@@ -55206,50 +55206,29 @@ var Historical = exports.Historical = function (_Component) {
             _react2.default.createElement(
               'ul',
               null,
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'button',
-                  { onClick: function onClick() {
-                      return _this3.fill({ index: "USD" });
-                    }, className: 'active' },
-                  'USD'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'button',
-                  { onClick: function onClick() {
-                      return _this3.fill({ index: "CNY" });
-                    } },
-                  'CNY'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'button',
-                  { onClick: function onClick() {
-                      return _this3.fill({ index: "EUR" });
-                    } },
-                  'EUR'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'button',
-                  { onClick: function onClick() {
-                      return _this3.fill({ index: "GBP" });
-                    } },
-                  'GBP'
-                )
-              )
+              this.props.coins.map(function (ele, index) {
+                return _react2.default.createElement(
+                  'li',
+                  { key: index },
+                  _this3.state.index === ele ? _react2.default.createElement(
+                    'button',
+                    { className: 'Btn__coin Btn__coin--active', onClick: function onClick() {
+                        return _this3.fill({ index: ele });
+                      } },
+                    ' ',
+                    ele,
+                    ' '
+                  ) : _react2.default.createElement(
+                    'button',
+                    { className: 'Btn__coin', onClick: function onClick() {
+                        return _this3.fill({ index: ele });
+                      } },
+                    ' ',
+                    ele,
+                    ' '
+                  )
+                );
+              })
             )
           )
         ),
@@ -55273,6 +55252,14 @@ var Historical = exports.Historical = function (_Component) {
 
   return Historical;
 }(_react.Component);
+
+Historical.defaultProps = {
+  coins: ["USD", "CNY", "EUR", "GBP"]
+};
+
+Historical.propTypes = {
+  coins: _react.PropTypes.array
+};
 
 /***/ }),
 /* 329 */
@@ -81915,7 +81902,7 @@ exports = module.exports = __webpack_require__(436)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font-family: \"Arial\"; }\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\nul {\n  list-style: none;\n  display: flex; }\n\nh1 {\n  width: 100%;\n  padding: 3% 0; }\n\n.App__content {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n  max-width: 960px;\n  width: 100%;\n  margin: 0 auto;\n  padding: 0.5vw; }\n\n.RealTime {\n  width: 28%; }\n  .RealTime__result {\n    background-color: #2b3035;\n    width: 96%;\n    border: 2px solid black;\n    margin: 2% auto;\n    padding: 1%; }\n  .RealTime__row {\n    font-weight: bold;\n    padding: 2% 0;\n    color: white; }\n    .RealTime__row span:first-child {\n      margin-right: 2%; }\n  .RealTime__Name {\n    color: #ffca17;\n    font-size: 0.7vw; }\n  .RealTime__porcent {\n    color: #e66d19;\n    font-size: 0.8vw; }\n  .RealTime__price {\n    font-size: 0.8vw;\n    color: white;\n    font-weight: bold; }\n  .RealTime__cost--big {\n    font-size: 2vw; }\n\n.Historical {\n  width: 68%; }\n  .Historical__nav {\n    margin: 1% auto;\n    padding: 1%;\n    width: 98%;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    border: 1px solid #dddddd;\n    border-top: none; }\n  .Historical__subTitle {\n    background-color: #2b3035;\n    border-radius: 3px;\n    color: white;\n    padding: 0.8% 1.5%; }\n  .Historical__date {\n    display: none;\n    color: #8a8a8a;\n    font-size: 1vw; }\n  .Historical__download {\n    margin: 5% auto;\n    width: 98%;\n    display: flex;\n    justify-content: flex-end; }\n  .Historical__btn {\n    background-color: #2b3035;\n    border: none;\n    color: white;\n    padding: 1.2%;\n    border-radius: 5px; }\n  .Historical__graphic {\n    width: 98%;\n    margin: 0 auto; }\n\n.RealTime__header, .Historical__header {\n  background-color: #333;\n  color: white;\n  font-size: 0.5vw;\n  padding: 0.4vw 0.3vw 0.2vw; }\n\n.RealTime, .Historical {\n  border: 1px solid #333;\n  border-radius: 5px;\n  overflow: hidden; }\n", ""]);
+exports.push([module.i, "body {\n  font-family: \"Arial\"; }\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\nbutton {\n  background-color: transparent;\n  white-space: pre;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  padding: .3vw;\n  margin: 1px;\n  border: none; }\n\nul {\n  list-style: none;\n  display: flex; }\n\nh1 {\n  width: 100%;\n  padding: 3% 0; }\n\n.App__content {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n  align-items: flex-start;\n  max-width: 960px;\n  width: 100%;\n  margin: 0 auto;\n  padding: 0.5vw; }\n\n.RealTime {\n  width: 28%; }\n  .RealTime__result {\n    background-color: #2b3035;\n    width: 96%;\n    border: 2px solid black;\n    margin: 2% auto;\n    padding: 1%; }\n  .RealTime__row {\n    font-weight: bold;\n    padding: 2% 0;\n    color: white; }\n    .RealTime__row span:first-child {\n      margin-right: 2%; }\n  .RealTime__Name {\n    color: #ffca17;\n    font-size: 0.7vw; }\n  .RealTime__porcent {\n    color: #e66d19;\n    font-size: 0.8vw; }\n  .RealTime__price {\n    font-size: 0.8vw;\n    color: white;\n    font-weight: bold; }\n  .RealTime__cost--big {\n    font-size: 2vw; }\n\n.Historical {\n  width: 68%; }\n  .Historical__nav {\n    margin: 1% auto;\n    padding: 1%;\n    width: 98%;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    border: 1px solid #dddddd;\n    border-top: none; }\n  .Historical__subTitle {\n    background-color: #2b3035;\n    border-radius: 3px;\n    color: white;\n    padding: 0.8vw 1vw; }\n  .Historical__date {\n    display: none;\n    color: #8a8a8a;\n    font-size: 1vw; }\n  .Historical__download {\n    margin: 5% auto;\n    width: 98%;\n    display: flex;\n    justify-content: flex-end; }\n  .Historical__btn {\n    background-color: #2b3035;\n    border: none;\n    color: white;\n    padding: 1.2%;\n    border-radius: 5px; }\n  .Historical__graphic {\n    width: 98%;\n    margin: 0 auto; }\n\n.Btn__historical {\n  background-color: #e6e6e6; }\n  .Btn__historical--active {\n    background-color: #fbc001; }\n\n.Btn__coin {\n  padding: 0.8vw;\n  color: #c3c3c3;\n  border-radius: 3px; }\n  .Btn__coin--active {\n    color: white;\n    background-color: #2b3035; }\n\n.RealTime__header, .Historical__header {\n  background-color: #333;\n  color: white;\n  font-size: 0.5vw;\n  padding: 0.4vw 0.3vw 0.2vw; }\n\n.RealTime, .Historical {\n  border: 1px solid #333;\n  border-radius: 5px;\n  overflow: hidden; }\n", ""]);
 
 // exports
 

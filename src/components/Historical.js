@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Services } from './Services'
 import { HistoricalGraphic } from './HistoricalGraphic'
-import {Line} from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 
 export class Historical extends Component {
   constructor() {
@@ -9,14 +9,14 @@ export class Historical extends Component {
 
     let nowTemp = new Date();
 
+
+
     this.state = {
       isLoading: true,
       index: "USD", 
       now: nowTemp.yyyymmdd(),
       end: this.addDays(-7)
     };
-
-    this.fill.bind(this);
 
     //console.log("end", this.state.end)
 
@@ -47,12 +47,13 @@ export class Historical extends Component {
     var d = new Date();
 
     return `${day}.${monthNames[monthIndex]}`;
-    
   }
 
 
 
   fill(obj = null){
+
+    console.log(this.state)
     
     if (obj !== null) this.setState(obj);
 
@@ -121,7 +122,6 @@ export class Historical extends Component {
     }, pathService);
   }
  
-
   render(){
     if (this.state.isLoading){
       return(
@@ -146,20 +146,27 @@ export class Historical extends Component {
 
           <nav className="Historical__navTime">
             <ul>
-              <li><button onClick={() => this.fill({end: this.addDays(-7)})} >1w</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-30)})} >1m</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-90)})} >3m</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-357)})} >1y</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-2555)})} >all</button></li>
+              <li><button className="Btn__historical Btn__historical--active" onClick={() => this.fill({end: this.addDays(-7)})} >1w</button></li>
+              <li><button className="Btn__historical" onClick={() => this.fill({end: this.addDays(-30)})} >1m</button></li>
+              <li><button className="Btn__historical" onClick={() => this.fill({end: this.addDays(-90)})} >3m</button></li>
+              <li><button className="Btn__historical" onClick={() => this.fill({end: this.addDays(-357)})} >1y</button></li>
+              <li><button className="Btn__historical" onClick={() => this.fill({end: this.addDays(-2555)})} >all</button></li>
             </ul>
           </nav>
 
           <nav className="Historical__coin" >
             <ul>
-              <li><button onClick={() => this.fill({index: "USD"})} className="active">USD</button></li>
-              <li><button onClick={() => this.fill({index: "CNY"})} >CNY</button></li>
-              <li><button onClick={() => this.fill({index: "EUR"})} >EUR</button></li>
-              <li><button onClick={() => this.fill({index: "GBP"})} >GBP</button></li>
+              {this.props.coins.map( (ele, index) => (
+                <li key={index}>
+                  { this.state.index === ele ?
+
+                    <button className="Btn__coin Btn__coin--active" onClick={() => this.fill({index: ele })} > {ele} </button>
+                    : 
+                    <button className="Btn__coin" onClick={() => this.fill({index: ele })} > {ele} </button>
+                  }
+                  
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
@@ -175,3 +182,14 @@ export class Historical extends Component {
     )
   }
 }
+
+Historical.defaultProps = {
+  coins: ["USD", "CNY", "EUR", "GBP"]
+}
+
+Historical.propTypes = {
+  coins: PropTypes.array,
+}
+
+
+
