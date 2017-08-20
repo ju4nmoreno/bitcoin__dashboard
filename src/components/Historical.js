@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Services } from './Services'
-import { HistoricalGraphic } from './HistoricalGraphic'
 import {Line} from 'react-chartjs-2'
+import { Graphic } from './Graphic'
 
 export class Historical extends Component {
   constructor() {
@@ -47,10 +47,7 @@ export class Historical extends Component {
     var d = new Date();
 
     return `${day}.${monthNames[monthIndex]}`;
-    
   }
-
-
 
   fill(obj = null){
     
@@ -121,15 +118,18 @@ export class Historical extends Component {
     }, pathService);
   }
  
-
   render(){
     if (this.state.isLoading){
       return(
         <div>Loading ....</div>
       )
     }
+
     return(
+      
       <div className="Historical">
+        <Graphic numberDays='7'/>
+        
         <header className="Historical__header">
           <h2 className="Historical__title">Bitcoin</h2>
         </header>

@@ -17,8 +17,6 @@ Date.prototype.yyyymmdd = function() {
 
 ReactDOM.render(
   <div className="App__content">
-
-   
     <h1>Bitcoin Dashboar</h1>
     <RealTime className="RealTime"/>
     <Historical />
