@@ -8,6 +8,18 @@ body{
   box-sizing: border-box;
 }
 
+button {
+  background-color:transparent;
+  white-space: pre;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+
+  padding: .3vw;
+  margin: 1px;
+  border: none;
+}
+
 
 ul {
     list-style: none;
@@ -22,6 +34,7 @@ h1{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-start;
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
@@ -99,7 +112,7 @@ h1{
     background-color: #2b3035;
     border-radius: 3px;
     color: white;
-    padding: 0.8% 1.5%;
+    padding: 0.8vw 1vw;
   }
 
   &__date{
@@ -128,6 +141,28 @@ h1{
     margin: 0 auto;
   }
 
+}
+
+.Btn{
+
+  &__historical{
+    background-color: #e6e6e6;
+
+    &--active{
+      background-color: #fbc001;
+    }
+  }
+
+  &__coin{
+    padding: 0.8vw;
+    color:#c3c3c3;
+    border-radius: 3px;
+
+    &--active{
+      color: white;
+      background-color: #2b3035;
+    }
+  }
 }
 
 

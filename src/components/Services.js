@@ -9,7 +9,6 @@ export const Services = function(returnService, path){
     }
 
     if (ajax.status === 200) {
-      let text = JSON.parse( "[" + ajax.responseText + "]" );
       returnService( ajax.responseText );
       
     } else {

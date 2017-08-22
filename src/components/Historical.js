@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Services } from './Services'
-import {Line} from 'react-chartjs-2'
 import { Graphic } from './Graphic'
+import { Line } from 'react-chartjs-2'
 
 export class Historical extends Component {
   constructor() {
@@ -9,14 +9,15 @@ export class Historical extends Component {
 
     let nowTemp = new Date();
 
+
+
     this.state = {
       isLoading: true,
       index: "USD", 
+      days:7,
       now: nowTemp.yyyymmdd(),
       end: this.addDays(-7)
     };
-
-    this.fill.bind(this);
 
     //console.log("end", this.state.end)
 
@@ -49,7 +50,11 @@ export class Historical extends Component {
     return `${day}.${monthNames[monthIndex]}`;
   }
 
+
+
   fill(obj = null){
+
+    console.log(this.state)
     
     if (obj !== null) this.setState(obj);
 
@@ -70,9 +75,6 @@ export class Historical extends Component {
       var result = Object.keys(obj).map((key) => {
         return [key, obj[key]];
       });
-
-
-      //console.log("result", result)
 
 
       let labels = [], datas = [];
@@ -124,12 +126,8 @@ export class Historical extends Component {
         <div>Loading ....</div>
       )
     }
-
     return(
-      
       <div className="Historical">
-        <Graphic numberDays='7'/>
-        
         <header className="Historical__header">
           <h2 className="Historical__title">Bitcoin</h2>
         </header>
@@ -146,26 +144,39 @@ export class Historical extends Component {
 
           <nav className="Historical__navTime">
             <ul>
-              <li><button onClick={() => this.fill({end: this.addDays(-7)})} >1w</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-30)})} >1m</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-90)})} >3m</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-357)})} >1y</button></li>
-              <li><button onClick={() => this.fill({end: this.addDays(-2555)})} >all</button></li>
+              { this.props.days.map( (ele, index) => (
+                <li key={index}>
+                  {this.state.days === ele.day ? 
+                      <button className="Btn__historical Btn__historical--active" 
+                        onClick={() => this.setState({days: ele.day }) }> {ele.label} </button>
+                      :
+                      <button className="Btn__historical" 
+                        onClick={() => this.setState({days: ele.day }) }> {ele.label} </button>
+                  }
+                </li>
+              ))}
             </ul>
           </nav>
 
           <nav className="Historical__coin" >
             <ul>
-              <li><button onClick={() => this.fill({index: "USD"})} className="active">USD</button></li>
-              <li><button onClick={() => this.fill({index: "CNY"})} >CNY</button></li>
-              <li><button onClick={() => this.fill({index: "EUR"})} >EUR</button></li>
-              <li><button onClick={() => this.fill({index: "GBP"})} >GBP</button></li>
+              {this.props.coins.map( (ele, index) => (
+                <li key={index}>
+                  { this.state.index === ele ?
+
+                    <button className="Btn__coin Btn__coin--active" onClick={() => this.setState({index: ele })} > {ele} </button>
+                    : 
+                    <button className="Btn__coin" onClick={ () => this.setState({ index: ele}) } > {ele} </button>
+                  }
+                  
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
         
         <div className="Historical__graphic">
-          <Line data={this.state.data} />
+          <Graphic numberDays={this.state.days} typeMoney={this.state.index} />
         </div>
           
         <div className="Historical__download">
@@ -174,4 +185,20 @@ export class Historical extends Component {
       </div>
     )
   }
+}
+
+Historical.defaultProps = {
+  coins: ["USD", "CNY", "EUR", "GBP"],
+  days:[
+    {day:7, label:'1w'},
+    {day:30, label:'1m'}, 
+    {day: 90, label:'3m'}, 
+    {day: 365, label:'1y'}, 
+    {day: 2555, label:'ALL'}
+  ]
+}
+
+Historical.propTypes = {
+  coins: PropTypes.array,
+  days: PropTypes.array,
 }
